@@ -120,6 +120,10 @@ function _onEverythingLoaded () {
   MenuManager.init()
   DialogManager.init()
 
+  _statusMessage = new StatusMessage(document.getElementById('status-message'))
+  _noConnectionMessage = new StatusMessage(document.getElementById('no-connection-message'))
+
+
   if (mode == MODES.USER_GALLERY) {
     _showGallery(galleryUserId, true)
   } else if (mode == MODES.GLOBAL_GALLERY) {

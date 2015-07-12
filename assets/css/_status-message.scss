@@ -1,0 +1,47 @@
+.status-message-container {
+  position: absolute;
+  bottom: 33px;
+  left: 20px;
+  right: 20px;
+  height: 60px;
+  padding: 0;
+  z-index: 2000000;
+  pointer-events: none;
+  user-select: none;
+}
+
+.status-message-line {
+  margin-top: 10px;
+}
+
+.status-message {
+  color: rgb(64, 32, 32);
+  border-top: 3px solid darken(rgb(255, 230, 150), 20%);
+  border-bottom: 3px solid darken(rgb(255, 230, 150), 20%);
+  padding: 5px 20px;
+  padding-right: 0; // for close box
+  display: inline-block;
+  background: rgb(255, 230, 150);
+  font-size: 13px;
+  pointer-events: auto;
+
+  transition: opacity 200ms, transform 200ms;
+  transform: translateY(100px);
+
+  &.visible {
+    transform: translateY(0);
+  }
+
+  button {
+    margin-left: 20px;
+    font-size: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+.status-message-container.persistent-visible .status-message-line {
+  bottom: 78px;
+}

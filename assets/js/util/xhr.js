@@ -30,7 +30,6 @@ function _getUniqueRequestHeader () {
 }
 
 var _noConnectionMessage = {
-  visible: false,
   timerId: -1,
 
   schedule: function () {

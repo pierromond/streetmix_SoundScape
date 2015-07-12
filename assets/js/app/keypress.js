@@ -289,7 +289,6 @@ var Keypress = (function () {
     }
   }
 
-
   /**
    *  Processes commands
    *

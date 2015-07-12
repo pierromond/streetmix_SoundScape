@@ -137,7 +137,8 @@ function _onBodyKeyDown (event) {
 Keypress.register('ctrl s', {
   trackMsg: 'Command-S or Ctrl-S save shortcut key pressed'
 }, function () {
-  _statusMessage.show(msg('STATUS_NO_NEED_TO_SAVE'))
+  var saveMsg = new StatusMessage(msg('STATUS_NO_NEED_TO_SAVE'))
+  saveMsg.show()
 })
 
 function _getHoveredSegmentEl () {
