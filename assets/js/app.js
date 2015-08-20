@@ -26,3 +26,10 @@
 // = require_tree streets
 // = require_tree gallery
 // = require_tree users
+
+var Stmx = require('./app/initialization.js')
+
+var MenuManager = require('./menus/menu-manager.js')
+var Menu = require('./menus/menu.js')
+
+module.exports = Stmx

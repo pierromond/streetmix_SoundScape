@@ -2,7 +2,6 @@ var compression = require('compression')
 var cookieParser = require('cookie-parser')
 var cookieSession = require('cookie-session')
 var express = require('express')
-var assets = require('connect-assets')
 var bodyParser = require('body-parser')
 var config = require('config')
 var path = require('path')
@@ -68,13 +67,9 @@ app.get('/api/v1/translate/:locale_code', resources.v1.translate.get)
 
 app.get('/.well-known/status', resources.well_known_status.get)
 
-// Process stylesheets via Sass and PostCSS / Autoprefixer
+// Process stylesheets and scripts via middlewares
 app.use('/assets/css/styles.css', middleware.styles)
-
-app.use(assets({
-  paths: ['assets/js'],
-  precompile: ['app.js']
-}))
+app.get('/assets/js/app.js', middleware.scripts)
 
 app.use(express.static(path.join(__dirname, '/public')))
 

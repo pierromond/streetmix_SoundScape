@@ -140,3 +140,10 @@ function _prettifyWidth (width, purpose) {
 
   return widthText
 }
+
+module.exports = {
+  // TODO: export from here?
+  COUNTRIES_IMPERIAL_UNITS: COUNTRIES_IMPERIAL_UNITS,
+  SETTINGS_UNITS_METRIC: SETTINGS_UNITS_METRIC,
+  SETTINGS_UNITS_IMPERIAL: SETTINGS_UNITS_IMPERIAL
+}

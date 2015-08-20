@@ -53,7 +53,7 @@ var MESSAGES = {
   SEGMENT_NAME_EMPTY: 'Empty space'
 }
 
-function msg (messageId, data) {
+var msg = module.exports = function (messageId, data) {
   if (data) {
     return MESSAGES[messageId].supplant(data)
   } else {

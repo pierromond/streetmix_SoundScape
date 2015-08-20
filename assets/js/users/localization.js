@@ -3,7 +3,11 @@ var TRACK_ACTION_ERROR_GEOLOCATION_TIMEOUT = 'Geolocation timeout'
 var IP_GEOLOCATION_API_URL = 'http://freegeoip.net/json/'
 var IP_GEOLOCATION_TIMEOUT = 1000; // After this time, we don’t wait any more
 
-var units = SETTINGS_UNITS_IMPERIAL
+var debug = require('stmx/app/debug')
+
+// TODO: consider not importing from here
+var widthUnits = require('stmx/util/width-units')
+var units = widthUnits['SETTINGS_UNITS_IMPERIAL']
 
 var leftHandTraffic = false
 
@@ -54,6 +58,11 @@ function _detectGeolocationTimeout () {
 }
 
 function _updateSettingsFromCountryCode (countryCode) {
+  // Shimming for constants
+  var COUNTRIES_IMPERIAL_UNITS = widthUnits['COUNTRIES_IMPERIAL_UNITS']
+  var SETTINGS_UNITS_IMPERIAL = widthUnits['SETTINGS_UNITS_IMPERIAL']
+  var SETTINGS_UNITS_METRIC = widthUnits['SETTINGS_UNITS_METRIC']
+
   if (COUNTRIES_IMPERIAL_UNITS.indexOf(countryCode) != -1) {
     units = SETTINGS_UNITS_IMPERIAL
   } else {
@@ -163,4 +172,8 @@ function _propagateUnits () {
   }
 
   _buildStreetWidthMenu()
+}
+
+module.exports = {
+  updateSettingsFromCountryCode: _updateSettingsFromCountryCode
 }

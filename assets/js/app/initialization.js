@@ -1,20 +1,27 @@
+var $ = require('jquery')
+
 var initializing = false
 var bodyLoaded
 var readyStateCompleteLoaded
+
+var debug = require('stmx/app/debug')
+var system = require('stmx/app/system-capabilities')
+var msg = require('stmx/app/messages')
 
 var TRACK_ACTION_TOUCH_CAPABLE = 'Touch capability detected'
 
 // Some things are placed on the generic Stmx app object to keep it out of global scope
 // Do this as little as possible. Eventually, code becomes a collection of
 // individual modules that are require()'d by browserify
-var Stmx = {}
+// For ancient reasons, the Stmx object must be exposed on global scope (window)
+var Stmx = window.Stmx || {}
 
 Stmx.preInit = function () {
-  initializing = true
-  ignoreStreetChanges = true
-
-  _detectDebugUrl()
-  _detectSystemCapabilities()
+  this.initializing = initializing = true
+  this.ignoreStreetChanges = ignoreStreetChanges = true
+  this.debug = debug.detectFromUrl()
+  this.system = system.detectCapabilities()
+  this.readOnly = (system.phone || debug.forceReadOnly)
 }
 
 Stmx.init = function () {
@@ -228,3 +235,34 @@ function _setupNoInternetMode () {
   })
   _setEnvironmentBadge('Demo')
 }
+
+function _addBodyClasses () {
+  document.body.classList.add('environment-' + ENV)
+
+  if (system.windows) {
+    document.body.classList.add('windows')
+  }
+
+  if (system.safari) {
+    document.body.classList.add('safari')
+  }
+
+  if (system.touch) {
+    document.body.classList.add('touch-support')
+  }
+
+  if (readOnly) {
+    document.body.classList.add('read-only')
+  }
+
+  if (system.phone) {
+    document.body.classList.add('phone')
+  }
+
+  if (system.noInternet) {
+    document.body.classList.add('no-internet')
+  }
+}
+
+module.exports = Stmx
+window.Stmx = Stmx

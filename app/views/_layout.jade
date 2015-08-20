@@ -38,10 +38,8 @@ html(lang='en')
       var ENV = '#{ config.env }'
       var NO_INTERNET_MODE = #{ config.no_internet_mode }
 
-    != js('app')
-
+    script(src='/assets/js/app.js')
     script(src='//platform.twitter.com/widgets.js')
-
     script.
       Stmx.preInit()
 
