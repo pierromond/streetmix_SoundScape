@@ -1320,3 +1320,7 @@ function _prepareSegmentInfo () {
     }
   }
 }
+
+module.exports = {
+  prepareSegmentInfo: _prepareSegmentInfo
+}

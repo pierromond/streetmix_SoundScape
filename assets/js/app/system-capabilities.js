@@ -4,16 +4,16 @@
  *  Determines system capabilities.
  *  Part of the pre-initialization process.
  *
- *  @module SystemCapabilities
+ *  @module system-capabilities
  *  @requires Modernizr
  */
 'use strict'
 
 var Modernizr = require('modernizr')
 var debug = require('stmx/app/debug')
-var localization = require('stmx/users/localization')
 
 module.exports = {
+  // Default values
   touch: false,
   phone: false,
   safari: false,
@@ -25,10 +25,13 @@ module.exports = {
   cssTransform: false,
   ipAddress: null,
   apiUrl: null,
+
+  // Call this to detect & set system capability values.
   detectCapabilities: function () {
     // NOTE:
     // This function might be called on very old browsers. Please make
     // sure not to use modern faculties.
+    /* global NO_INTERNET_MODE */
 
     if (debug.forceNoInternet || NO_INTERNET_MODE === true) {
       this.noInternet = true
@@ -70,8 +73,8 @@ module.exports = {
       this.hiDpi = window.devicePixelRatio || 1.0
     }
 
-    if ((typeof matchMedia !== 'undefined') &&
-      matchMedia('only screen and (max-device-width: 480px)').matches) {
+    if ((typeof window.matchMedia !== 'undefined') &&
+      window.matchMedia('only screen and (max-device-width: 480px)').matches) {
       this.phone = true
     } else {
       this.phone = false
@@ -98,12 +101,6 @@ module.exports = {
     }
     var headEls = document.getElementsByTagName('head')
     headEls[0].appendChild(meta)
-
-    var language = window.navigator.userLanguage || window.navigator.language
-    if (language) {
-      var language = language.substr(0, 2).toUpperCase()
-      localization.updateSettingsFromCountryCode(language)
-    }
 
     return this
   }

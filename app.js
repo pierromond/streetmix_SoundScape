@@ -69,7 +69,7 @@ app.get('/.well-known/status', resources.well_known_status.get)
 
 // Process stylesheets and scripts via middlewares
 app.use('/assets/css/styles.css', middleware.styles)
-app.get('/assets/js/app.js', middleware.scripts)
+app.get('/assets/js/main.js', middleware.scripts)
 
 app.use(express.static(path.join(__dirname, '/public')))
 

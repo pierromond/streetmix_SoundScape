@@ -11,6 +11,8 @@ var DRAGGING_MOVE_HOLE_WIDTH = 40
 
 var SEGMENT_SWITCHING_TIME = 250
 
+var msg = require('stmx/app/messages')
+
 function _drawSegmentImage (tileset, ctx, sx, sy, sw, sh, dx, dy, dw, dh) {
   if (!sw || !sh || !dw || !dh) {
     return
@@ -617,4 +619,8 @@ function _segmentsChanged () {
   _repositionSegments()
 
   printingNeedsUpdating = true
+}
+
+module.exports = {
+  fillEmptySegments: _fillEmptySegments
 }

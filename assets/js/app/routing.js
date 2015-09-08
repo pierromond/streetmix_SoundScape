@@ -68,3 +68,8 @@ function _goCopyLastStreet () {
 function _goSignIn () {
   location.href = '/' + URL_SIGN_IN_REDIRECT
 }
+
+module.exports = {
+  URL_NEW_STREET: URL_NEW_STREET,
+  URL_NEW_STREET_COPY_LAST: URL_NEW_STREET_COPY_LAST
+}

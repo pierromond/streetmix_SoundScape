@@ -1,30 +1,22 @@
 var $ = require('jquery')
 
-var initializing = false
+//var initializing = false
 var bodyLoaded
 var readyStateCompleteLoaded
 
-var debug = require('stmx/app/debug')
-var system = require('stmx/app/system-capabilities')
+var Stmx = require('stmx/main')
+var debug = Stmx.debug
+var system = Stmx.system
+
 var msg = require('stmx/app/messages')
+var routing = require('stmx/app/routing')
+var view = require('stmx/segments/view')
+var info = require('stmx/segments/info')
+var localization = require('stmx/users/localization')
 
 var TRACK_ACTION_TOUCH_CAPABLE = 'Touch capability detected'
 
-// Some things are placed on the generic Stmx app object to keep it out of global scope
-// Do this as little as possible. Eventually, code becomes a collection of
-// individual modules that are require()'d by browserify
-// For ancient reasons, the Stmx object must be exposed on global scope (window)
-var Stmx = window.Stmx || {}
-
-Stmx.preInit = function () {
-  this.initializing = initializing = true
-  this.ignoreStreetChanges = ignoreStreetChanges = true
-  this.debug = debug.detectFromUrl()
-  this.system = system.detectCapabilities()
-  this.readOnly = (system.phone || debug.forceReadOnly)
-}
-
-Stmx.init = function () {
+module.exports = function () {
   /* global Locale */
   if (!debug.forceUnsupportedBrowser) {
     // TODO temporary ban
@@ -39,7 +31,7 @@ Stmx.init = function () {
 
   _fillDom()
   _setEnvironmentBadge()
-  _prepareSegmentInfo()
+  info.prepareSegmentInfo()
 
   // Check if no internet mode
   if (system.noInternet === true) {
@@ -49,6 +41,25 @@ Stmx.init = function () {
   // Toggle experimental features
   if (!debug.experimental) {
     document.getElementById('settings-menu-item').style.display = 'none'
+  }
+
+  if (debug.hoverPolygon) {
+    var el = document.createElement('div')
+    el.id = 'debug-hover-polygon'
+    document.body.appendChild(el)
+
+    var canvasEl = document.createElement('canvas')
+    canvasEl.width = window.innerWidth
+    canvasEl.height = window.innerHeight
+    el.appendChild(canvasEl)
+  }
+
+  // Set units & traffic further in init process
+  // (previously this is in pre-init)
+  var language = window.navigator.userLanguage || window.navigator.language
+  if (language) {
+    var language = language.substr(0, 2).toUpperCase()
+    localization.updateSettingsFromCountryCode(language)
   }
 
   // TODO make it better
@@ -113,7 +124,7 @@ function _onEverythingLoaded () {
   _updateShareMenu()
   _updateFeedbackMenu()
 
-  initializing = false
+  Stmx.initializing = false
   ignoreStreetChanges = false
   lastStreet = _trimStreetData(street)
 
@@ -191,10 +202,10 @@ function _fillDom () {
 
   $('#street-width-read').attr('title', msg('TOOLTIP_STREET_WIDTH'))
 
-  document.querySelector('#new-street').href = URL_NEW_STREET
-  document.querySelector('#copy-last-street').href = URL_NEW_STREET_COPY_LAST
+  document.querySelector('#new-street').href = routing['URL_NEW_STREET']
+  document.querySelector('#copy-last-street').href = routing['URL_NEW_STREET_COPY_LAST']
 
-  _fillEmptySegments()
+  view.fillEmptySegments()
 }
 
 function _setEnvironmentBadge (label) {
@@ -251,7 +262,7 @@ function _addBodyClasses () {
     document.body.classList.add('touch-support')
   }
 
-  if (readOnly) {
+  if (Stmx.readOnly) {
     document.body.classList.add('read-only')
   }
 
@@ -264,5 +275,3 @@ function _addBodyClasses () {
   }
 }
 
-module.exports = Stmx
-window.Stmx = Stmx

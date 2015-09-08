@@ -1,6 +1,12 @@
+/**
+ *  Debug feature flags
+ *
+ *  @module debug
+ */
 'use strict'
 
 module.exports = {
+  // Default values
   hoverPolygon: false,
   canvasRectangles: false,
   forceLeftHandTraffic: false,
@@ -10,21 +16,14 @@ module.exports = {
   forceNoInternet: false,
   secretSegments: false,
   experimental: false,
+
+  // Call this to set the values based on URL flags.
   detectFromUrl: function () {
-    var url = location.href
+    var url = window.location.href
 
     // TODO const
     if (url.match(/[\?\&]debug-hover-polygon\&?/)) {
       this.hoverPolygon = true
-
-      var el = document.createElement('div')
-      el.id = 'debug-hover-polygon'
-      document.body.appendChild(el)
-
-      var canvasEl = document.createElement('canvas')
-      canvasEl.width = window.innerWidth
-      canvasEl.height = window.innerHeight
-      el.appendChild(canvasEl)
     }
 
     // TODO better
@@ -79,4 +78,3 @@ module.exports = {
     return this
   }
 }
-
