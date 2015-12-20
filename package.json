@@ -12,10 +12,10 @@
     "npm": ">=3.3.12"
   },
   "scripts": {
-    "prestart": "mongod --fork --logpath /dev/null",
+    "prestart": "net start MongoDB",
     "start": "supervisor index.js",
     "stop": "mongo admin --eval 'db.shutdownServer()'",
-    "pretest": "mongod --fork --logpath /dev/null",
+    "pretest": "net start MongoDB",
     "test": "node_modules/.bin/sass-lint --config .sass-lint.yml  --verbose; node test/index | node_modules/.bin/tap-spec && grunt test:local",
     "posttest": "mongo admin --eval 'db.shutdownServer()'"
   },

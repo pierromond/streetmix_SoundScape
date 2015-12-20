@@ -80,6 +80,17 @@ function _buildStreetWidthMenu () {
   document.querySelector('#street-width').innerHTML = ''
 
   var el = document.createElement('option')
+  //Acoustics begin
+  el.disabled = true;
+  el.innerHTML = 'Acoustics:';
+  document.querySelector('#street-width').appendChild(el);
+  
+  var el = document.createElement('option');
+  el.disabled = true;
+  el.innerHTML = street.segments;
+  document.querySelector('#street-width').appendChild(el);
+  // acoustics end
+  
   el.disabled = true
   el.innerHTML = 'Occupied width:'
   document.querySelector('#street-width').appendChild(el)

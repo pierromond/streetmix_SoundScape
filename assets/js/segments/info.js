@@ -742,6 +742,9 @@ var SEGMENT_INFO = {
   'drive-lane': {
     name: 'Drive lane',
     owner: SEGMENT_OWNER_CAR,
+    // associate Speed and flow to trafic line (if possible insert a slider o choices in streetmix)
+	speed: 50, // km/h
+	flow: 60,  // veh/h
     zIndex: 2,
     defaultWidth: 10,
     variants: ['direction', 'car-type'],
@@ -1015,6 +1018,9 @@ var SEGMENT_INFO = {
   'bus-lane': {
     name: 'Bus lane',
     owner: SEGMENT_OWNER_PUBLIC_TRANSIT,
+	// associate Speed and flow to trafic line (if possible insert a slider o choices in streetmix)
+	speed: 50, // km/h
+	flow: 60,  // veh/h
     zIndex: 2,
     defaultWidth: 12,
     variants: ['direction', 'bus-asphalt'],
